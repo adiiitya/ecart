@@ -1,0 +1,56 @@
+<!doctype html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ECART</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
+    <link rel="stylesheet" href="../css/app.css">
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.min.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="bower_components/angular-material/angular-material.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
+    <script src="bower_components/angular-base64/angular-base64.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="navigation/header.module.js"></script>
+    <script src="app.js"></script>
+    <script src="common/common.module.js"></script>
+    <script src="common/common.factories.js"></script>
+    <script src="login/login.module.js"></script>
+    <script src="categories/categories.module.js"></script>
+    <script src="categories/categories.controllers.js"></script>
+    <script src="categories/products/product.module.js"></script>
+    <script src="categories/products/products.controller.js"></script>
+    <script src="users/users.module.js"></script>
+    <script src="users/users.controller.js"></script>
+
+
+    <!--<script src="categories/controllers/allCategories.js"></script>
+    <script src="categories/controllers/createCategories.js"></script>
+  -->
+
+
+</head>
+<body ng-app="ecart">
+
+
+<div ui-view="navigation.header"></div>
+<!--<div ui-view="content"></div>-->
+<div class="app-content">
+    <div ui-view class="animate-fade-up">
+
+    </div>
+</div>
+</body>
+
+</html>

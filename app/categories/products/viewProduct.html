@@ -1,0 +1,93 @@
+<h3>{{category.name}}</h3>
+<md-button class="md-raised md-primary" ng-click="newProduct(category.id)">Create Product</md-button>
+<div>
+
+    <md-autocomplete style="width: auto"
+                     md-search-text="searchText"
+                     md-items="item in queryGroups(searchText)"
+                     md-item-text="item.name"
+                     md-selected-item="item.name"
+                     md-search-text-change="selectedTextChanged(searchText)"
+                     md-autoselect="true"
+                     md-select-on-match="true"
+                     md-no-cache="true"
+                     md-require-match="true"
+                     placeholder="Find a Product..">
+        <span md-highlight-text="searchText">{{item.name}}</span>
+    </md-autocomplete>
+
+
+</div>
+<div layout="row" layout-sm="column" layout-align="space-around">
+    <md-progress-circular md-mode="indeterminate" ng-show="isLoading"></md-progress-circular>
+</div>
+<table  class="table table-hover">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Offer</th>
+        <th>Price</th>
+        <th>Description</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="product in category.products |filter: productFilter |orderBy:'-price' ">
+        <td>{{product.name}}</td>
+        <td>{{product.offer}}</td>
+        <td>{{product.price}}</td>
+        <td>
+            <div ng-repeat="desc in product.description ">
+                <label> {{desc.label}}</label> : <label>{{desc.value}}</label>
+            </div>
+        </td>
+
+
+        <td>
+            <img class="delete-image" ng-click="editProduct(product.id)" src="images/editImage.png">
+            <img class="delete-image" ng-click="deleteProduct($event,product.id)" src="images/deleteImage.png">
+
+        </td>
+    </tr>
+
+
+    </tbody>
+</table>
+<!--
+
+<table ng-show="searchText" class="table table-hover">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Offer</th>
+        <th>Price</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="product in category.products |filter: searchText">
+        <td>{{product.name}}</td>
+        <td>{{product.offer}}</td>
+        <td>{{product.price}}</td>
+        <td>
+            <div ng-repeat="desc in product.description">
+                <label> {{desc.label}}</label> : <label>{{desc.value}}</label>
+            </div>
+        </td>
+
+
+        <td>
+            <img class="delete-image" ng-click="editProduct(product.id)" src="images/editImage.png">
+            <img class="delete-image" ng-click="deleteProduct($event,product.id)" src="images/deleteImage.png">
+
+        </td>
+    </tr>
+
+
+    </tbody>
+</table>
+
+
+
+
+-->

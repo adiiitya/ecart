@@ -1,0 +1,48 @@
+<h3>All Categories</h3>
+
+<div>
+    <md-autocomplete style="width: auto"
+                     md-search-text="searchText"
+                     md-items="item in queryGroups(searchText)"
+                     md-item-text="item.name"
+                     md-search-text-change="selectedTextChanged(searchText)"
+                     md-selected-item="item"
+                     md-autoselect="true"
+                     md-select-on-match="true"
+                     md-no-cache="true"
+                     md-require-match="true"
+                     md-min-length="1"
+                     placeholder="Find a Category..">
+        <span md-highlight-text="searchText">{{item.name}}</span>
+    </md-autocomplete>
+
+
+</div>
+
+<table  class="table table-hover" width="100%">
+    <thead>
+    <tr>
+        <th> Name</th>
+        <th>Offer</th>
+        <th>Products</th>
+        <th></th>
+    </tr>
+    </thead>
+
+
+    <tbody>
+    <div layout="row" layout-sm="column" layout-align="space-around">
+        <md-progress-circular md-mode="indeterminate" ng-show="isLoading"></md-progress-circular>
+    </div>
+    <tr ng-repeat="category in categories| filter:categoryFilter | orderBy:'-id'">
+        <td ng-click="viewCategory(category)">{{category.name}}</td>
+        <td>{{category.offer}}</td>
+        <td>{{category.products.length}}</td>
+        <td>
+            <img class="delete-image" ng-click="editCategory(category.id)" src="images/editImage.png">
+            <img class="delete-image" ng-click="deleteCategory($event,category.id)" src="images/deleteImage.png">
+
+        </td>
+    </tr>
+    </tbody>
+</table>

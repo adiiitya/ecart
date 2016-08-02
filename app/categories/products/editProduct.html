@@ -1,0 +1,65 @@
+<div>
+    <h2>{{category.name}}</h2>
+
+    <form>
+        <div layout="row">
+            <md-input-container class="md-block" flex="20">
+                <label>Name</label><input aria-label="name" ng-model="product.name">
+            </md-input-container>
+        </div>
+        <div layout="row">
+            <md-input-container class="md-block" flex="20">
+                <label>Price</label><input aria-label="price" ng-model="product.price">
+            </md-input-container>
+        </div>
+        <div layout="row">
+            <md-input-container class="md-block" flex="20">
+                <label>Offer</label><input aria-label="offer" ng-model="product.offer">
+            </md-input-container>
+        </div>
+
+                <div layout="row">
+                    <div layout="column">
+                        <div id="image-container">
+                            <div ng-hide="uploadedImages.length" layout="row" >
+                                <image ng-repeat="image in product.images" class="product-image" ng-src="{{image.url}}" title="{{image.title}}"></image>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <div layout="row">
+                <button ng-model="image" multiple="true" ngf-select="uploadImage($files)"
+                        class="btn btn-success btn-sm">select Image
+                </button>
+            </div>
+        <div layout="row">
+            <md-button class="md-raised md-primary" ng-click="addDescription()">Add Description</md-button>
+        </div>
+        <div>
+
+            <div layout="row" ng-repeat="label in product.description track by $index">
+                <label>Label</label>
+                <md-input-container class="md-block" flex="20">
+                    <input aria-label="label" id="{{'desc_' + $index + '_label'}}" aria-label="input_$index"
+                           ng-model="product.description[$index].label">
+                </md-input-container>
+                <div style="margin-left: 200px;">
+                    <label>Value</label>
+                    <md-input-container class="md-block" flex="20">
+                        <input aria-label="value" id="{{'desc_' + $index + '_value'}}" ng-model="product.description[$index].value" aria-label="input_$index">
+                    </md-input-container>
+                </div>
+                <img class="delete-image" ng-click="removeChoice($event,$index)" src="images/deleteImage.png">
+
+            </div>
+
+            <md-button class="md-raised md-primary" ng-click="submit()">Submit</md-button>
+            <md-button class="md-raised md-primary" ng-click="cancel()">Cancel</md-button>
+
+        </div>
+
+    </form>
+
+
+</div>

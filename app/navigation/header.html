@@ -1,0 +1,61 @@
+<div>
+    <div>
+        <md-toolbar class="md-theme-indigo">
+            <div layout="row">
+                <div>
+                    <md-menu-bar>
+                        <md-menu>
+                            <button ng-click="$mdOpenMenu()">
+                                Categories
+                            </button>
+                            <md-menu-content>
+                                <md-menu-item>
+                                    <md-button ng-click="navigateTo('ecart.categories.all')">
+                                        All
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-item>
+                                    <md-button ng-click="navigateTo('ecart.categories.create')">
+                                        Create
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                        <md-menu>
+                            <button ng-click="$mdOpenMenu()">
+                                Users
+                            </button>
+                            <md-menu-content>
+                                <md-menu-item>
+                                    <md-button ng-click="navigateTo('ecart.users.all')">
+                                        All Users
+                                    </md-button>
+                                </md-menu-item>
+
+                            </md-menu-content>
+
+                        </md-menu>
+                        <md-menu style="margin-left: 1000px;">
+                           <img style="width: 50px; height: 50px; padding-top: 5px;" class="img-circle" src="images/user.png" ng-click="$mdOpenMenu()">Admin
+                            <!--<md-button ng-click="$mdOpenMenu()">Account</md-button>-->
+                            <md-menu-content>
+                                <md-menu-item>
+                                    <md-button ng-click="">
+                                        Update
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-item>
+                                    <md-button ng-click="logOut()">LogOut
+                                    </md-button>
+                                </md-menu-item>
+
+                            </md-menu-content>
+                        </md-menu>
+                    </md-menu-bar>
+
+                </div>
+            </div>
+        </md-toolbar>
+    </div>
+
+</div>

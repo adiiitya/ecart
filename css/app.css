@@ -1,0 +1,107 @@
+/* app css stylesheet */
+
+.menu {
+    list-style: none;
+    border-bottom: 0.1em solid black;
+    margin-bottom: 2em;
+    padding: 0 0 0.5em;
+}
+
+.menu:before {
+    content: "[";
+
+}
+
+.menu:after {
+    content: "]";
+}
+
+.menu > li {
+    display: inline;
+}
+
+.menu > li:before {
+    content: "|";
+    padding-right: 0.3em;
+}
+
+.menu > li:nth-child(1):before {
+    content: "";
+    padding: 0;
+}
+
+
+.md-menu-bar-menu.md-dense.md-default-theme > md-menu-item button{
+    color : black;
+}
+
+md-toolbar{
+    min-height: 50px;
+}
+
+md-menu-bar md-menu.md-open > button, md-menu-bar md-menu > button:focus{
+    color: black;
+}
+.md-menu > button{
+    color:white;
+}
+body{
+    background: #F5F5F5;
+}
+.app-content{
+    margin: 5% ;
+    /*min-height: 600px;*/
+    background: #ffffff;
+    padding: 10px;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+.product-image{
+    width:150px;
+    height:150px;
+}
+tbody {
+    display:block;
+    height:300px;
+    overflow:auto;
+}
+thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;
+}
+thead {
+    width: calc( 100% - 1em )
+}
+md-input-container {
+    margin-left: 10px;
+}
+.remove{
+    /*background: #C76868;*/
+    /*color: #FFF;*/
+    font-weight: bold;
+    font-size: 21px;
+    border: 0;
+    cursor: pointer;
+    /*display: inline-block;*/
+    padding: 4px 9px;
+    vertical-align: top;
+    line-height: 100%;
+}
+.product_image{
+    width: 100px;
+    height:100px;
+}
+.md-button{
+    text-transform: none;
+}
+.delete-image{
+    width:50px;
+    height:50px;
+}
+
+.form-validation  .ng-invalid.ng-pristine {
+    border-color: red;
+}
+.form-validation  .ng-invalid.ng-dirty {
+    border-color: red;
+}
