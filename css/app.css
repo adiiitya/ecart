@@ -94,9 +94,12 @@ md-input-container {
 .md-button{
     text-transform: none;
 }
-.delete-image{
-    width:50px;
-    height:50px;
+.actions-image {
+    width:25px;
+    height:25px;
+}
+.md-progress-circular{
+    position: absolute;
 }
 
 .form-validation  .ng-invalid.ng-pristine {
@@ -104,4 +107,11 @@ md-input-container {
 }
 .form-validation  .ng-invalid.ng-dirty {
     border-color: red;
+}
+.md-toast.error {
+    background-color: red;
+}
+
+.md-toast.success {
+    background-color: green;
 }

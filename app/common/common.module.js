@@ -3,7 +3,8 @@
  */
 angular.module('ecart.common',[])
     .constant('Api',{
-        ecart:'http://192.168.99.12:90'
+        ecart:'http://192.168.99.12:90/admin',
+        image:'http://192.168.99.12:90'
 
     })
     .directive('mediaPreview', function($log, $document) {
@@ -130,5 +131,6 @@ angular.module('ecart.common',[])
 
         }
 
-    });
+    })
+
 

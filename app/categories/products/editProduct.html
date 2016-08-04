@@ -18,21 +18,22 @@
             </md-input-container>
         </div>
 
-                <div layout="row">
-                    <div layout="column">
-                        <div id="image-container">
-                            <div ng-hide="uploadedImages.length" layout="row" >
-                                <image ng-repeat="image in product.images" class="product-image" ng-src="{{image.url}}" title="{{image.title}}"></image>
-                            </div>
-                        </div>
+        <div layout="row">
+            <div layout="column">
+                <div id="image-container">
+                    <div ng-hide="uploadedImages.length" layout="row">
+                        <image ng-repeat="image in product.images" class="product-image" ng-src="{{image.url}}"
+                               title="{{image.title}}"></image>
                     </div>
                 </div>
-
-            <div layout="row">
-                <button ng-model="image" multiple="true" ngf-select="uploadImage($files)"
-                        class="btn btn-success btn-sm">select Image
-                </button>
             </div>
+        </div>
+
+        <div layout="row">
+            <button ng-model="image" multiple="true" ngf-select="uploadImage($files)"
+                    class="btn btn-success btn-sm">select Image
+            </button>
+        </div>
         <div layout="row">
             <md-button class="md-raised md-primary" ng-click="addDescription()">Add Description</md-button>
         </div>
@@ -47,10 +48,11 @@
                 <div style="margin-left: 200px;">
                     <label>Value</label>
                     <md-input-container class="md-block" flex="20">
-                        <input aria-label="value" id="{{'desc_' + $index + '_value'}}" ng-model="product.description[$index].value" aria-label="input_$index">
+                        <input aria-label="value" id="{{'desc_' + $index + '_value'}}"
+                               ng-model="product.description[$index].value" aria-label="input_$index">
                     </md-input-container>
                 </div>
-                <img class="delete-image" ng-click="removeChoice($event,$index)" src="images/deleteImage.png">
+                <img class="actions-image" ng-click="removeChoice($event,$index)" src="images/deleteImage.png">
 
             </div>
 

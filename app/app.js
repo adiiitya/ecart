@@ -5,7 +5,7 @@ var app = angular.module('ecart', [
     'ngAnimate', 'ngAria', 'ngMaterial', 'ui.router','ngFileUpload','ecart.common','base64','ngCookies',
     'ecart.home',
     'ecart.categories','ecart.users',
-    'ecart.navigation'
+    'ecart.navigation','toaster'
 ]);
 app.run(function ($http) {
    // $http.defaults.headers.post['Cookie'] = 'XDEBUG_SESSION=18826';
@@ -32,7 +32,17 @@ app.config(function ($httpProvider,$stateProvider, $urlRouterProvider,$locationP
                 //    templateUrl: "login/home2.html"
                 //
                 //}
+            },
+            resolve: {
+                    debug: function($http) {
+                        return  $http.get(Api.ecart + '/debug');
+                        ;
+                    }
+                },
+            onEnter: {
+
             }
+
         })
        ;
     $urlRouterProvider.otherwise('/login');

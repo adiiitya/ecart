@@ -31,6 +31,7 @@
     "cookie": "^1.2.0",
     "angular-cookies": "1.3.20",
     "md-dialog": "^1.2.1",
-    "angular-base64": "^2.0.5"
+    "angular-base64": "^2.0.5",
+    "toast": "^2.1.1"
   }
 }

@@ -1,5 +1,6 @@
 <div>
     <h3 ng-show="complete">{{category.name}}</h3>
+
     <form name="myform" class="form-validation">
         <div layout="row"><label>Name</label>
             <md-input-container class="md-block" flex="20">
@@ -16,10 +17,14 @@
         <div ng-hide="cancelDiv" layout="row">
             <div layout="column">
                 <div id="image-container">
-                    <image ng-hide="uploadedImages.length" ng-repeat="image in category.images" class="product-image" ng-src="{{image.url}}" title="{{image.title}}"></image>
+                    <image ng-hide="uploadedImages.length" id="{{'image_' + $index}}"
+                           ng-repeat="image in category.images" class="product-image" ng-src="{{image.url}}"
+                           title="{{image.title}}">{{image.url}}
+                    </image>
                 </div>
+                {{imgg}}
             </div>
-            </div>
+        </div>
         <!--<div layout="row" ng-repeat="image in category.images">
             <image class="product-image" ng-src="{{image.url}}" title="{{image.title}}"></image>
 
@@ -36,7 +41,9 @@
 
 
         <div>
-            <md-button class="md-raised md-primary" ng-disabled="myform.$invalid " ng-click="submit()" ng-disabled="myform.$invalid ">Save</md-button>
+            <md-button class="md-raised md-primary" ng-disabled="myform.$invalid " ng-click="submit()"
+                       ng-disabled="myform.$invalid ">Save
+            </md-button>
             <md-button class="md-raised md-primary" ng-click="cancel()">Cancel</md-button>
 
         </div>

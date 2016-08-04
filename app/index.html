@@ -6,10 +6,16 @@
     <title>ECART</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- build:css css/ecart.min.css -->
     <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
     <link rel="stylesheet" href="../css/app.css">
     <link rel="stylesheet" href="../css/login.css">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../css/toaster.css">
+    <!-- endbuild -->
+
+    <!-- build:js js/ecart.min.js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
@@ -19,13 +25,16 @@
     <script src="bower_components/angular-material/angular-material.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
+    <script src="bower_components/satellizer/dist/satellizer.js"></script>
     <script src="bower_components/underscore/underscore.js"></script>
     <script src="bower_components/angular-base64/angular-base64.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="navigation/header.module.js"></script>
     <script src="app.js"></script>
+    <script src="common/toaster.js"></script>
     <script src="common/common.module.js"></script>
     <script src="common/common.factories.js"></script>
+    <script src="common/common.log.js"></script>
     <script src="login/login.module.js"></script>
     <script src="categories/categories.module.js"></script>
     <script src="categories/categories.controllers.js"></script>
@@ -33,6 +42,7 @@
     <script src="categories/products/products.controller.js"></script>
     <script src="users/users.module.js"></script>
     <script src="users/users.controller.js"></script>
+    <!-- endbuild -->
 
 
     <!--<script src="categories/controllers/allCategories.js"></script>
@@ -46,6 +56,7 @@
 
 <div ui-view="navigation.header"></div>
 <!--<div ui-view="content"></div>-->
+<toaster-container toaster-options="{'time-out': 3000}"></toaster-container>
 <div class="app-content">
     <div ui-view class="animate-fade-up">
 

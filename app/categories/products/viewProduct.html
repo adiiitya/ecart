@@ -21,7 +21,7 @@
 <div layout="row" layout-sm="column" layout-align="space-around">
     <md-progress-circular md-mode="indeterminate" ng-show="isLoading"></md-progress-circular>
 </div>
-<table  class="table table-hover">
+<table class="table table-hover">
     <thead>
     <tr>
         <th>Name</th>
@@ -44,8 +44,8 @@
 
 
         <td>
-            <img class="delete-image" ng-click="editProduct(product.id)" src="images/editImage.png">
-            <img class="delete-image" ng-click="deleteProduct($event,product.id)" src="images/deleteImage.png">
+            <img class="actions-image" ng-click="editProduct(product.id)" src="images/editImage.png">
+            <img class="actions-image" ng-click="deleteProduct($event,product.id)" src="images/deleteImage.png">
 
         </td>
     </tr>
@@ -53,41 +53,3 @@
 
     </tbody>
 </table>
-<!--
-
-<table ng-show="searchText" class="table table-hover">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Offer</th>
-        <th>Price</th>
-        <th>Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="product in category.products |filter: searchText">
-        <td>{{product.name}}</td>
-        <td>{{product.offer}}</td>
-        <td>{{product.price}}</td>
-        <td>
-            <div ng-repeat="desc in product.description">
-                <label> {{desc.label}}</label> : <label>{{desc.value}}</label>
-            </div>
-        </td>
-
-
-        <td>
-            <img class="delete-image" ng-click="editProduct(product.id)" src="images/editImage.png">
-            <img class="delete-image" ng-click="deleteProduct($event,product.id)" src="images/deleteImage.png">
-
-        </td>
-    </tr>
-
-
-    </tbody>
-</table>
-
-
-
-
--->

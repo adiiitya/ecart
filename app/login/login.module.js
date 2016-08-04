@@ -12,41 +12,29 @@ angular.module('ecart.home', ['ui.router'])
 
             })
     })
-    /*.config(['$routeProvider', function($routeProvider) {
-        $routeProvider.when('/login', {
-            templateUrl: '/home1.html',
-            controller: 'View1Ctrl'
-        });
-    }])*/
 
-    .controller('LoginController', function ($scope,$http,CommonFactory,Api, $state) {
+    .controller('LoginController', function ($rootScope, $scope, toaster, $http, CommonFactory, Api, $mdDialog, $mdToast, $state) {
 
-        $scope.admin={
-            email:"",
-            password:""
-        }
-        var url= Api.ecart+'/auth/login';
-       var data= $scope.admin;
-        $scope.submit = function () {
-            $state.go('ecart.categories.all');
-
-            $http.post(url,data)
-                .success(function (data, status, headers, config) {
-                    console.log("Sucesss"+data)
-                    $state.go('ecart.categories.all');
-
-                })
-                .error(function (data, status, header, config) {
-                })
-
-
-            //CommonFactory.users.admin()
-            //    .then(function (adminData) {
-            //        $scope.admin=adminData.data;
-            //        $state.go('ecart.categories.all');
-            //
-            //    })
+        $rootScope.admin = {
+            email: "",
+            password: ""
         };
-        console.log("Home");
+        $http.get(Api.ecart + '/debug');
+        var url = Api.ecart + '/authenticate';
+        var data = $rootScope.admin;
+        $scope.submit = function (ev) {
+            $http.post(url, data).then(function (response) {
+                if (response.data == 'Admin login')
+                    console.log("Submites syccessfully");
+                $state.go('ecart.categories.all');
+                toaster.pop('success', "", "Login successfull");
+
+            }, function (response) {
+                toaster.pop('error', "", "User id and Password Does Not Match");
+                console.log("DAta" + response.statusText)
+
+            })
+
+        };
 
     });

@@ -9,7 +9,7 @@
         </div>
         <div layout="row">
             <md-input-container class="md-block" flex="20">
-                <label>Price</label><input aria-label="price" ng-model="product.price">
+                <label>Price</label><input aria-label="price" ng-required="required" ng-model="product.price">
             </md-input-container>
         </div>
         <div layout="row">
@@ -29,7 +29,7 @@
             </button>
         </div>
         <div layout="row">
-            <md-button  class="md-raised md-primary" ng-click="addDescription()">Add
+            <md-button class="md-raised md-primary" ng-click="addDescription()">Add
                 Description
             </md-button>
         </div>
@@ -39,15 +39,19 @@
             <div layout="row" ng-repeat="label in product.description">
                 <label>Label</label>
                 <md-input-container class="md-block" flex="20">
-                    <input aria-label="label" id="{{'desc_' + $index + '_label'}}" ng-model="product.description[$index].label">
+                    <input aria-label="label" id="{{'desc_' + $index + '_label'}}" ng-required="required"
+                           ng-model="product.description[$index].label">
                 </md-input-container>
                 <div style="margin-left: 200px;">
                     <label>Value</label>
                     <md-input-container class="md-block" flex="20">
-                        <input aria-label="value" id="{{'desc_' + $index + '_value'}}" ng-model="product.description[$index].value">
+                        <input aria-label="value" id="{{'desc_' + $index + '_value'}}" ng-required="required"
+                               ng-model="product.description[$index].value">
                     </md-input-container>
                 </div>
-                <!--<button class="remove" ng-click="removeChoice(label.id)">--><img class="delete-image" ng-click="removeChoice($event,$index)" src="images/deleteImage.png"><!-- -</button>-->
+                <!--<button class="remove" ng-click="removeChoice(label.id)">--><img class="actions-image"
+                                                                                     ng-click="removeChoice($event,$index)"
+                                                                                     src="images/deleteImage.png"><!-- -</button>-->
             </div>
             <!--<pre>{{product|json}}</pre>-->
 
@@ -57,9 +61,6 @@
         <md-button class="md-raised md-primary" ng-click="cancel()">Cancel</md-button>
 
     </form>
-
-
-
 
 
 </div>
