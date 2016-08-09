@@ -73,7 +73,7 @@ angular.module('ecart.categories')
                 cancel: 'Cancel'
             });
             $mdDialog.show(confirm).then(function () {
-                $http.delete(Api.ecart + '/category/' + categoryId,{headers:{role:'admin'}}).then(function (response) {
+                CommonFactory.category.delete(categoryId).then(function (response) {
                 if(response.data=='category removed'){
                     var index = _.findIndex($scope.categories, {id: categoryId});
                     $scope.categories.splice(index, 1);

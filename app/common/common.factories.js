@@ -19,6 +19,9 @@ angular.module('ecart.common')
 
                     return $http.put(Api.ecart + '/category/' + id, data, {headers: {role: 'admin'}});
                 },
+                delete:function(categoryId){
+                        return $http.delete(Api.ecart + '/category/' + categoryId,{headers:{role:'admin'}})
+                },
                 products: {
                     all: function (id) {
                         return $http.get(Api.ecart + '/category/' + id + '/product/list');
@@ -32,6 +35,9 @@ angular.module('ecart.common')
                     update: function (id, pid, data) {
 
                         return $http.put(Api.ecart + '/category/' + id + '/product/' + pid, data, {headers: {role: 'admin'}});
+                    },
+                    delete:function(id){
+                        return $http.delete(Api.ecart + '/product/' + id, {headers: {role: 'admin'}});
                     }
                 }
             },

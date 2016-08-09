@@ -32,7 +32,7 @@ app.config(function ($httpProvider,$stateProvider, $urlRouterProvider,$locationP
                 //    templateUrl: "login/home2.html"
                 //
                 //}
-            },
+            }/*,
             resolve: {
                     debug: function($http) {
                         return  $http.get(Api.ecart + '/debug');
@@ -41,7 +41,7 @@ app.config(function ($httpProvider,$stateProvider, $urlRouterProvider,$locationP
                 },
             onEnter: {
 
-            }
+            }*/
 
         })
        ;
