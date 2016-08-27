@@ -1,72 +1,51 @@
 <h3>All Users</h3>
-<div layout="row" layout-sm="column" layout-align="space-around">
-    <md-progress-circular md-mode="indeterminate" ng-show="isLoading"></md-progress-circular>
+<div  layout="row" layout-sm="column" layout-align="space-around">
+    <md-progress-circular  md-mode="indeterminate" ng-show="isLoading || sendingMail"
+                           ></md-progress-circular>
 </div>
-<!--<div>
-    <md-autocomplete style="width: auto"
-                     md-search-text="searchText"
-                     md-items="item in queryGroups(searchText)"
-                     md-item-text="item.name"
-                     md-selected-item="item.name"
-                     md-autoselect="true"
-                     md-select-on-match="true"
-                     md-no-cache="true"
-                     md-require-match="true"
-                     placeholder="Find a User..">
-        <span md-highlight-text="searchText">{{item.name}}</span>
-    </md-autocomplete>
 
 
-</div>-->
-
-<table  class="table table-hover" width="100%">
+<table ng-hide="sendingMail" class="table table-hover" width="100%">
     <thead>
     <tr>
-        <th> Name</th>
+        <th><div>
+
+            <md-checkbox
+                    ng-model="checkAll"
+                    aria-label="Checkbox 1"
+                    ng-change="addAllMail()"
+                    class="md-primary md-align-top-left">
+                Name
+            </md-checkbox>
+        </div>
+        </th>
+        <th>Email</th>
         <th>Contact</th>
-        <th>Products</th>
-        <th></th>
+        <th ng-click="sendMailAll($event)">Mail to All</th>
     </tr>
     </thead>
 
 
     <tbody>
     <tr ng-repeat="user in users">
-        <td ng-click="viewCategory(user)">{{user.name}}</td>
-        <td>{{user.contact}}</td>
-        <td>{{user.products}}</td>
         <td>
-            <img class="actions-image" ng-click="editUser(user.id)" src="images/editImage.png">
-            <img class="actions-image" ng-click="deleteUser($event,user.id)" src="images/deleteImage.png">
+            <md-checkbox
+                    ng-model="row.selected[$index]"
+                    aria-label="Checkbox 1"
+                    ng-change="addMail($index)"
+                    class="md-primary md-align-top-left">
+                {{user.name}}
+            </md-checkbox>
+        </td>
+        <td >{{user.email}}</td>
+        <td>{{user.contact}}</td>
+        <td>
+            <img class="actions-image" ng-click="sendMail($event,user.email)" src="images/1470831244_telegram.png">
 
         </td>
     </tr>
     </tbody>
 </table>
-
-<!--
-
-<table ng-show="searchText" class="table table-hover" width="100%">
-    <thead>
-    <tr>
-        <th> Name</th>
-        <th>Offer</th>
-        <th>Products</th>
-        <th></th>
-    </tr>
-    </thead>
+{{users | json}}
 
 
-    <tbody>
-    <tr ng-repeat="category in categories| filter:searchText">
-        <td ng-click="viewCategory(category)">{{category.name}}</td>
-        <td>{{category.offer}}</td>
-        <td>{{category.products.length}}</td>
-        <td>
-            <img class="actions-image" ng-click="editCategory(category.id)" src="images/editImage.png">
-            <img class="actions-image" ng-click="deleteCategory($event,category.id)" src="images/deleteImage.png">
-
-        </td>
-    </tr>
-    </tbody>
-</table>-->

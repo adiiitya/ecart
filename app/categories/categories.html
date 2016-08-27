@@ -27,7 +27,7 @@
 
         <th> Name</th>
         <th>Offer</th>
-        <th>Products</th>
+        <th>Types</th>
         <th></th>
     </tr>
     </thead>
@@ -38,9 +38,13 @@
 
         <td ng-click="viewCategory(category)">{{category.name}}</td>
         <td>{{category.offer}}</td>
-        <td>{{category.products.length}}</td>
         <td>
-            <img class="actions-image delete" ng-click="editCategory(category.id)" src="images/editImage.png">
+            <div ng-repeat="item in product.categoryTypes">
+                <label>{{item.type}}</label>:<label>{{item.value}}</label>
+            </div>
+        </td>
+        <td>
+            <img class="actions-image delete" ng-click="editCategory(category.id)" src="images/1470828558_icon-136-document-edit.png">
             <img class="actions-image edit" ng-click="deleteCategory($event,category.id)" src="images/delete.png">
 
         </td>

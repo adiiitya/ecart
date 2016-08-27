@@ -49,15 +49,27 @@ body{
     background: #F5F5F5;
 }
 .app-content{
-    margin: 5% ;
-    /*min-height: 600px;*/
-    background: #ffffff;
+    /*margin: 5% ;*/
+    /*/!*min-height: 600px;*!/*/
+    /*background: #ffffff;*/
     padding: 10px;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    /*box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);*/
 }
 .product-image{
     width:150px;
     height:150px;
+    border-right: 1px solid #eee;
+    padding: 10px;
+    margin-right: 20px;
+    box-shadow: 0 2px 5px 0 #eee;
+}
+.div-size{
+    width:120px;
+    height:120px;
+}
+.container-box{
+    box-shadow: 0 2px 5px 0 ;
+    position: relative;
 }
 tbody {
     display:block;
@@ -269,3 +281,34 @@ md-input-container {
     background-color:#2aabd2;box-shadow: 10px 10px 5px #888888;margin-top: 2px;
 
 }
+
+/*Hiding Spinners for number input field*/
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+thead {
+    background-color: whitesmoke;
+    width: calc( 100% - 0em );
+}
+#image-container{
+ padding: 10px;
+    height: 300px;
+    overflow: auto;
+}
+.app-content .container-box{
+    width: 100%;
+    margin: 5px;
+    padding: 10px;
+}
+.form-row{
+    margin-bottom:5px;
+}
+/*section{*/
+    /*width: 100%;*/
+/*}*/

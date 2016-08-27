@@ -8,8 +8,8 @@ angular.module('ecart.home', ['ui.router'])
                 url: '/login',
                 templateUrl: "login/login.html",
                 controller: 'LoginController'
-
-
+                //templateUrl: "categories/products/createProduct.html",
+                //controller: 'createProductController'
             })
     })
 

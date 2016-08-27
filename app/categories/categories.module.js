@@ -46,7 +46,36 @@ angular.module('ecart.categories', ['ecart.categories.product'])
                     }
                 }
             })
+            .state('ecart.categories.all.list',{
+                url:'/arrival/list',
 
+                views:{
+                    "@":{
+                        templateUrl:'categories/allOrder.html',
+                        controller:'listOrder'
+                    }
+                }
+            })
+            .state('ecart.categories.all.create',{
+                url:'/arrival/create',
+
+                views:{
+                    "@":{
+                        templateUrl:'categories/newArrival.html',
+                        controller:'createOrder'
+                    }
+                }
+            })
+            .state('ecart.categories.all.edit',{
+                url:'/arrival/edit/:oId',
+
+                views:{
+                    "@":{
+                        templateUrl:'categories/newArrival.html',
+                        controller:'createOrder'
+                    }
+                }
+            })
 
 
 

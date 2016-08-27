@@ -3,252 +3,396 @@
 
     <form>
         <div layout="row-md-12">
-            <section>
-                <div layout="row-sm-12">
-                    <md-input-container class="md-block">
-                        <label>Name</label><input aria-label="name" ng-model="product.name">
+            <div class="col-sm-4 container-box">
+                <div class="form-row" layout="row-sm-12">
+                    <label class="col-sm-3">Name</label>
+                    <input class="col-sm-8" ng-model="product.name">
+                    <!-- <md-input-container class="md-block" >
+                         <label>Name</label><input aria-label="name" ng-model="product.name">
+                     </md-input-container>-->
+                </div>
+                <div class="form-row" layout="row-sm-12">
+                    <label class="col-sm-3">Price</label>
+                    <input class="col-sm-8" ng-model="product.price">
+                    <!-- <md-input-container class="md-block" >
+                         <label>Price</label><input aria-label="price" ng-model="product.price">
+                     </md-input-container>-->
+                </div>
+                <div class="form-row" layout="row-sm-12">
+                    <label class="col-sm-3">Offer</label>
+                    <input class="col-sm-8" ng-model="product.offer">
+                    <!-- <md-input-container class="md-block" >
+                         <label>Offer</label><input aria-label="offer" ng-model="product.offer">
+                     </md-input-container>-->
+                </div>
+                <div class="form-row" layout="row-sm-12">
+                    <label class="col-sm-3">Brand</label>
+                    <input class="col-sm-8" ng-model="product.brand">
+                </div>
+                <div class="form-row" layout="row-sm-12">
+                    <md-input-container>
+                        <label>Types</label>
+                        <md-select ng-model="product.productCategoryType"
+                                   md-on-close="clearSearchTerm()"
+                                   data-md-container-class="selectdemoSelectHeader"
+                                   multiple>
+                            <md-select-header class="demo-select-header">
+                                <input ng-model="searchTerm"
+                                       type="search"
+                                       placeholder="Search for a type.."
+                                       class="demo-header-searchbox md-text">
+                            </md-select-header>
+                            <md-optgroup label="types">
+                                <md-option ng-value="item.id" ng-repeat="item in product.categoryTypes |
+              filter:searchTerm">{{item.type}}</md-option>
+                            </md-optgroup>
+                        </md-select>
                     </md-input-container>
                 </div>
-                <div layout="row-sm-12">
-                    <md-input-container class="md-block">
-                        <label>Price</label><input aria-label="price" ng-model="product.price">
-                    </md-input-container>
+
+                <div class="form-row">
+                    <label style="padding: 12px;"><u>Stock Information:</u> </label>
+
+                    <div layout="row">
+                        <md-checkbox
+                                ng-model="stock"
+                                aria-label="Checkbox 1"
+                                ng-change="showStock()"
+                                class="md-primary md-align-top-left">
+                            Stock
+                        </md-checkbox>
+                        <div ng-hide="!stock" layout="row">
+                            <md-input-container class="md-block">
+                                <input type="number" ng-disabled="!stock" aria-label="input_$index"
+                                       ng-model="product.stockData[0].stock">
+                            </md-input-container>
+                            <md-button multiple="true" ngf-select="uploadImage(0,$files)" class="md-raised md-primary">
+                                select Image
+                            </md-button>
+
+                        </div>
+
+                    </div>
+                    <div layout="row">
+                        <md-checkbox
+                                ng-model="colorStock"
+                                aria-label="Checkbox 2"
+                                ng-change="showColorStock()"
+                                class="md-primary md-align-top-left">
+                            Color
+                        </md-checkbox>
+                        <md-checkbox
+                                ng-model="sizeStock"
+                                aria-label="Checkbox 3"
+                                ng-change="showSizeStock()"
+                                class="md-primary md-align-top-left">
+                            Size
+                        </md-checkbox>
+                        <!-- <md-checkbox
+                                ng-model="colorSizeStock"
+                                aria-label="Checkbox 2"
+                                ng-change="showColorSizeStock()"
+                                class="md-primary md-align-top-left">
+                            Color And Size
+                        </md-checkbox>-->
+                    </div>
                 </div>
-                <div layout="row-sm-12">
-                    <md-input-container class="md-block">
-                        <label>Offer</label><input aria-label="offer" ng-model="product.offer">
-                    </md-input-container>
+                <div class="form-row">
+                    <label>Ideal For</label>
+                    <md-checkbox
+                            ng-model="men"
+                            aria-label="Checkbox 2"
+                            ng-change="changeMen()"
+                            class="md-primary md-align-top-left">
+                        Men
+                    </md-checkbox>
+                    <md-checkbox
+                            ng-model="women"
+                            aria-label="Checkbox 3"
+                            ng-change="changeWomen()"
+                            class="md-primary md-align-top-left">
+                        Women
+                    </md-checkbox>
+                    <md-checkbox
+                            ng-model="kids"
+                            aria-label="Checkbox 3"
+                            ng-change="changeKids()"
+                            class="md-primary md-align-top-left">
+                        Kids
+                    </md-checkbox>
+                    <md-checkbox
+                            ng-model="other"
+                            aria-label="Checkbox 3"
+                            ng-change="changeOther()"
+                            class="md-primary md-align-top-left">
+                        Other
+                    </md-checkbox>
                 </div>
-            </section>
-            <section style="margin-left: 70px;">
-                <div class="row-sm-12">
+            </div>
+
+
+            <div class="container-box col-md-8" layout="column" layout-sm="row">
+                <div class="col-sm-12">
+                    <label>Description</label>
+                </div>
+                <div class="col-sm-12">
+                    <table class="table-striped">
+                        <thead>
+                        <th class="col-sm-2">
+                            <img style="margin-top: 5px;padding:2px;" class="actions-image"
+                                 ng-click="addDescription()"
+                                 src="images/1471343913_InterfaceExpendet-05.png">
+                            <img class="actions-image"
+                                 ng-click="removeAllDesc($event)"
+                                 src="images/delete.png">
+                        </th>
+                        <th class="col-sm-4">Label</th>
+                        <th class="col-sm-4">Value</th>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="label in product.description">
+                            <td class="col-sm-1">
+                                <img class="actions-image"
+                                     ng-click="removeChoice($event,$index)"
+                                     src="images/delete.png">
+                            </td>
+                            <td class="col-sm-4">
+                                <md-input-container>
+                                    <input type="text" aria-label="label" id="{{'desc_' + $index + '_label'}}"
+                                           ng-model="product.description[$index].label" ng-required="required">
+                                </md-input-container>
+                            </td>
+                            <td class="col-sm-4">
+                                <md-input-container>
+                                    <input type="text" aria-label="value" id="{{'desc_' + $index + '_value'}}"
+                                           ng-model="product.description[$index].value" ng-required="required">
+                                </md-input-container>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div layout="row-md-12">
+            <div class="container-box col-md-6" layout="column" layout-sm="row" ng-show="colorStock || sizeStock">
+                <table id="colorTable" ng-hide="(!colorStock) || (colorStock && sizeStock)" class="table-striped">
+                    <div ng-hide="(!colorStock) || (colorStock && sizeStock)" class="col-sm-12"><label>Colors</label>
+                    </div>
+                    <thead ng-show="colorStock">
+                    <th class="col-sm-2"><img style="margin-top: 5px;padding:2px;" class="actions-image"
+                                              ng-click="showColorStock()"
+                                              ng-hide="!colorStock"
+                                              src="images/1471343913_InterfaceExpendet-05.png">
+                        <img class="actions-image"
+                             ng-click="removeAllColor($event)"
+                             src="images/delete.png">
+                    </th>
+                    <th class="col-sm-4">Color</th>
+                    <th class="col-sm-3">Stock Value</th>
+                    <th class="col-sm-2">Images</th>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="color in product.stockData">
+                        <td class="col-sm-1">
+                            <img class="actions-image"
+                                 ng-click="removeColor($event,color.stockId,1)"
+                                 src="images/delete.png">
+                        </td>
+                        <td class="col-sm-4">
+                            <div>
+                                <input class="col-sm-1" style="margin-top: 15px;" type="radio"
+                                       name="radioColor-{{$index}}"
+                                       ng-model="product.defaultStockIndex" value="{{$index}}"
+                                       ng-change="changeRadio($index)">
+
+                                <md-input-container layout="col-sm-2">
+                                    <input aria-label="color" id="{{'color_' + $index }}" ng-required="required"
+                                           ng-model="product.stockData[$index].color">
+                                </md-input-container>
+                            </div>
+                        </td>
+                        <td class="col-sm-3">
+                            <md-input-container class="md-block">
+                                <input type="number" aria-label="value" id="{{'color_' + $index + '_stock'}}"
+                                       ng-required="required"
+                                       ng-model="product.stockData[$index].stock">
+                            </md-input-container>
+                        </td>
+                        <td class="col-sm-2">
+                            <md-button multiple="true" ngf-select="uploadImage($index,$files)"
+                                       class="md-raised md-primary">
+                                select Image
+                            </md-button>
+                        </td>
+                    </tr>
+                    </tbody>
+
+                </table>
+                <table id="sizeTable" ng-hide="(!sizeStock) || (sizeStock && colorStock)" class="table-striped">
+                    <thead ng-show="sizeStock">
+                    <div ng-hide="(!sizeStock) || (sizeStock && colorStock)" class="col-sm-12"><label>Size</label></div>
+
+                    <th class="col-sm-2"><img style="margin-top: 5px;padding:2px;" class="actions-image"
+                                              ng-click="showSizeStock()"
+                                              ng-hide="!sizeStock"
+                                              src="images/1471343913_InterfaceExpendet-05.png">
+                        <img class="actions-image"
+                             ng-click="removeAllSize($event)"
+                             src="images/delete.png">
+                    </th>
+                    <th class="col-sm-4">Size</th>
+                    <th class="col-sm-3">Stock Value</th>
+                    <th class="col-sm-2">Images</th>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="size in product.stockData">
+                        <td class="col-sm-1">
+                            <img class="actions-image"
+                                 ng-click="removeSize($event,1)"
+                                 src="images/delete.png">
+                        </td>
+                        <td class="col-sm-4">
+                            <div>
+                                <input class="col-sm-1" style="margin-top: 15px;" type="radio"
+                                       name="radioSize-{{$index}}"
+                                       ng-model="product.defaultStockIndex" value="{{$index}}"
+                                       ng-change="changeRadio($index)">
+                                <md-input-container>
+                                    <input aria-label="color" id="{{'size' + $index + ''}}" ng-required="required"
+                                           ng-model="product.stockData[$index].size">
+                                </md-input-container>
+                            </div>
+                        </td>
+                        <td class="col-sm-3">
+                            <md-input-container class="md-block">
+                                <input type="number" aria-label="value" id="{{'size' + $index + '_stock'}}"
+                                       ng-required="required"
+                                       ng-model="product.stockData[$index].stock">
+                            </md-input-container>
+                        </td>
+                        <td class="col-sm-2">
+                            <md-button multiple="true" ngf-select="uploadImage($index,$files)"
+                                       class="md-raised md-primary">
+                                select Image
+                            </md-button>
+                        </td>
+                    </tr>
+                    </tbody>
+
+                </table>
+                <table id="colorSizeTable" ng-show="colorStock && sizeStock" class="table-striped">
+                    <thead>
+                    <div ng-show="colorStock && sizeStock" class="col-sm-12"><label>Colors And Sizes</label></div>
+
+                    <th class="col-sm-2"><img style="margin-top: 5px;padding:2px;" class="actions-image"
+                                              ng-click="showColorSizeStock()"
+                                              ng-show="colorStock && sizeStock"
+                                              src="images/1471343913_InterfaceExpendet-05.png">
+                        <img class="actions-image"
+                             ng-click="removeAllColorSize($event)"
+                             src="images/delete.png">
+                    </th>
+                    <th class="col-sm-4">Color</th>
+                    <th class="col-sm-2">Size</th>
+                    <th class="col-sm-2">Stock Value</th>
+                    <th class="col-sm-2">Images</th>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="size in product.stockData">
+                        <td class="col-sm-1">
+                            <img class="actions-image"
+                                 ng-click="removeColorSize($event,1)"
+                                 src="images/delete.png">
+                        </td>
+                        <td class="col-sm-4">
+                            <div>
+                                <input class="col-sm-1" style="margin-top: 15px;" type="radio"
+                                       name="radioColorSize-{{$index}}"
+                                       ng-model="product.defaultStockIndex" value="{{$index}}"
+                                       ng-change="changeRadio($index)">
+                                <md-input-container>
+                                    <input aria-label="color" id="{{'colorSize' + $index + '_color'}}"
+                                           ng-required="required"
+                                           ng-model="product.stockData[$index].color">
+                                </md-input-container>
+                            </div>
+                        </td>
+                        <td class="col-sm-2">
+                            <md-input-container class="md-block">
+                                <input aria-label="size" id="{{'colorSize' + $index + '_size'}}"
+                                       ng-required="required"
+                                       ng-model="product.stockData[$index].size">
+                            </md-input-container>
+                        </td>
+                        <td class="col-sm-2">
+                            <md-input-container class="md-block">
+                                <input type="number" aria-label="value" id="{{'colorSize' + $index + '_stock'}}"
+                                       ng-required="required"
+                                       ng-model="product.stockData[$index].stock">
+                            </md-input-container>
+                        </td>
+                        <td class="col-sm-2">
+                            <md-button multiple="true" ngf-select="uploadImage($index,$files)"
+                                       class="md-raised md-primary">
+                                select Image
+                            </md-button>
+                        </td>
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
+            <div class="col-sm-6 container-box">
+                <div class="row">
                     <div class="col-sm-12">
-                        <div class="row-sm-4">
-                            <div class="row-sm-2" id="image-container">
-                                <div ng-hide="uploadedImages.length" class="row-sm-4">
-                                    <image ng-repeat="image in product.images" class="product-image"
-                                           ng-src="{{image.url}}"
-                                           title="{{image.title}}"></image>
+                        <div class="row-sm-12">
+                            <label>Images</label>
+
+                            <div class="row-sm-6 " id="image-container" image-container>
+                                <div class=" row col-sm-12" id="stock-image-wrapper"
+                                     ng-repeat="(stockIndex,stock) in product.stockData">
+
+                                    <!--<div ng-show="uploadedImages.length" class="row col-sm-3"
+                                         ng-repeat="(imageIndex,img) in stock.images">
+                                        <img class="product-image" src="{{img.url}}">
+                                        <input type="radio" name="imageRow-{{stockIndex}}"
+                                               ng-model="product.stockData[stockIndex].defaultImageIndex"
+                                               value="{{imageIndex}}" ng-change="changeImage(stockIndex)">
+                                    </div>-->
+
+                                    <div class="row col-sm-3"
+                                         ng-repeat="(imageIndex,image) in stock.images" class="row-sm-4">
+                                        <label>{{stock.color||stock.size}}</label>
+                                        <image class="product_image"
+                                               ng-src="{{image.url}}"
+                                               title="{{image.title}}"></image>
+                                        <input type="radio" name="imageRow-{{stockIndex}}"
+                                               ng-model="product.stockData[stockIndex].defaultImageIndex"
+                                               value="{{imageIndex}}" ng-change="changeImage(stockIndex)">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-4">
-                        <md-button ng-model="image" multiple="true" ngf-select="uploadImage($files)"
-                                   class="md-raised md-primary">
-                            select Image
-                        </md-button>
-                    </div>
                 </div>
-            </section>
-
-        </div>
-        <div class="col-md-8">
-            <label>Stock Information: </label>
-
-            <div layout="row">
-                <md-checkbox
-                        ng-model="stock"
-                        aria-label="Checkbox 1"
-                        ng-change="showStock()"
-                        class="md-primary md-align-top-left">
-                    Stock
-                </md-checkbox>
-                <md-checkbox
-                        ng-model="colorStock"
-                        aria-label="Checkbox 2"
-                        ng-change="showColorStock()"
-                        class="md-primary md-align-top-left">
-                    Color
-                </md-checkbox>
-                <md-checkbox
-                        ng-model="sizeStock"
-                        aria-label="Checkbox 3"
-                        ng-change="showSizeStock()"
-                        class="md-primary md-align-top-left">
-                    Size
-                </md-checkbox>
-                <md-checkbox
-                        ng-model="colorSizeStock"
-                        aria-label="Checkbox 2"
-                        ng-change="showColorSizeStock()"
-                        class="md-primary md-align-top-left">
-                    Color And Size
-                </md-checkbox>
-            </div>
-        </div>
-        <div class="row col-sm-8" style="margin-left:150px;">
-            <div ng-hide="!stock" style="box-shadow: 10px 10px 5px #888888;position: relative;" layout="row">
-                <label style="margin-left: 150px;">Stock</label>
-                <md-input-container class="md-block">
-                    <input type="number" aria-label="input_$index"
-                           ng-model="product.stockData[0].stock">
-                </md-input-container>
-
-                <img class="actions-image"
-                     ng-click="removeChoice($event,1)"
-                     src="images/deleteImage.png">
-            </div>
-            <table id="colorTable" style="box-shadow: 10px 10px 5px #888888;position: relative" ng-hide="!colorStock"
-                   class="table-striped">
-                <thead>
-                <th class="col-sm-1"><img style="margin-top: 5px;padding:2px;" class="actions-image"
-                                          ng-click="showColorStock()"
-                                          ng-hide="!colorStock"
-                                          src="images/images.jpg"></th>
-                <th class="col-sm-4">Color</th>
-                <th class="col-sm-3">Stock Value</th>
-                </thead>
-                <tbody>
-                <tr ng-repeat="color in product.stockData">
-                    <td class="col-sm-1">
-                        <img class="actions-image"
-                             ng-click="removeColor($event,1)"
-                             src="images/deleteImage.png">
-                    </td>
-                    <td class="col-sm-4">
-                        <md-input-container>
-                            <input aria-label="color" id="{{'color_' + $index + ''}}" ng-required="required"
-                                   ng-model="product.stockData[$index].color">
-                        </md-input-container>
-                    </td>
-                    <td class="col-sm-3">
-                        <md-input-container class="md-block">
-                            <input type="number" aria-label="value" id="{{'color_' + $index + '_stock'}}"
-                                   ng-required="required"
-                                   ng-model="product.stockData[$index].stock">
-                        </md-input-container>
-                    </td>
-                </tr>
-                </tbody>
-
-            </table>
-            <table id="sizeTable" style="box-shadow: 10px 10px 5px #888888;position: relative" ng-hide="!sizeStock"
-                   class="table-striped">
-                <thead>
-                <th class="col-sm-1"><img style="margin-top: 5px;padding:2px;" class="actions-image"
-                                          ng-click="showSizeStock()"
-                                          ng-hide="!sizeStock"
-                                          src="images/images.jpg"></th>
-                <th class="col-sm-4">Size</th>
-                <th class="col-sm-3">Stock Value</th>
-                </thead>
-                <tbody>
-                <tr ng-repeat="size in product.stockData">
-                    <td class="col-sm-1">
-                        <img class="actions-image"
-                             ng-click="removeSize($event,1)"
-                             src="images/deleteImage.png">
-                    </td>
-                    <td class="col-sm-4">
-                        <md-input-container>
-                            <input aria-label="color" id="{{'size' + $index + ''}}" ng-required="required"
-                                   ng-model="product.stockData[$index].size">
-                        </md-input-container>
-                    </td>
-                    <td class="col-sm-3">
-                        <md-input-container class="md-block">
-                            <input type="number" aria-label="value" id="{{'size' + $index + '_stock'}}"
-                                   ng-required="required"
-                                   ng-model="product.stockData[$index].stock">
-                        </md-input-container>
-                    </td>
-                </tr>
-                </tbody>
-
-            </table>
-            <table id="colorSizeTable" style="box-shadow: 10px 10px 5px #888888;position: relative"
-                   ng-hide="!colorSizeStock" class="table-striped">
-                <thead>
-                <th class="col-sm-1"><img style="margin-top: 5px;padding:2px;" class="actions-image"
-                                          ng-click="showColorSizeStock()"
-                                          ng-hide="!colorSizeStock"
-                                          src="images/images.jpg"></th>
-                <th class="col-sm-3">Color</th>
-                <th class="col-sm-3">Size</th>
-                <th class="col-sm-1">Stock Value</th>
-                </thead>
-                <tbody>
-                <tr ng-repeat="size in product.stockData">
-                    <td class="col-sm-1">
-                        <img class="actions-image"
-                             ng-click="removeColorSize($event,1)"
-                             src="images/deleteImage.png">
-                    </td>
-                    <td class="col-sm-4">
-                        <md-input-container>
-                            <input aria-label="color" id="{{'colorSize' + $index + '_color'}}" ng-required="required"
-                                   ng-model="product.stockData[$index].color">
-                        </md-input-container>
-                    </td>
-                    <td class="col-sm-3">
-                        <md-input-container class="md-block">
-                            <input aria-label="size" id="{{'colorSize' + $index + '_size'}}"
-                                   ng-required="required"
-                                   ng-model="product.stockData[$index].size">
-                        </md-input-container>
-                    </td>
-                    <td>
-                        <md-input-container class="md-block">
-                            <input type="number" aria-label="value" id="{{'colorSize' + $index + '_stock'}}"
-                                   ng-required="required"
-                                   ng-model="product.stockData[$index].stock">
-                        </md-input-container>
-                    </td>
-                </tr>
-                </tbody>
-
-            </table>
-
-        </div>
-
-        <div class="col-sm-12">
-            <h3>Description</h3>
-        </div>
-        <div class="col-md-8" layout="row" layout-sm="column" style="margin-left:150px; ">
-            <table style="box-shadow: 10px 10px 5px #888888;position: relative" class="table table-striped">
-
-                <th class="col-sm-2"><img style="margin-top: 5px;padding:2px;" class="actions-image"
-                                          ng-click="addDescription()"
-
-                                          src="images/images.jpg"></th>
-                <th class="col-sm-4">Label</th>
-                <th class="col-sm-4">Value</th>
-
-
-                <tr ng-repeat="label in product.description">
-                    <td class="col-sm-2">
-                        <img class="actions-image"
-                             ng-click="removeChoice($event,$index)"
-                             src="images/deleteImage.png">
-                    </td>
-                    <td class="col-sm-4">
-                        <md-input-container>
-                            <input type="text" aria-label="label" id="{{'desc_' + $index + '_label'}}"
-                                   ng-model="product.description[$index].label" ng-required="required">
-                        </md-input-container>
-                    </td>
-                    <td class="col-sm-4">
-                        <md-input-container>
-                            <input type="text" aria-label="value" id="{{'desc_' + $index + '_value'}}"
-                                   ng-model="product.description[$index].value" ng-required="required">
-                        </md-input-container>
-                    </td>
-                </tr>
-
-            </table>
-
-        </div>
-        <div class="row">
-            <div class="col-sm-6">
-                <md-button class="md-raised md-primary" ng-disabled="myform.$invalid " ng-click="submit()">Submit
-                </md-button>
-                <md-button class="md-raised md-primary" ng-click="cancel()">Cancel</md-button>
 
             </div>
+
+        </div>
+
+        <div class="row-col-sm-6">
+            <md-button class="md-raised md-primary" ng-click="submit()">Submit</md-button>
+            <md-button class="md-raised md-primary" ng-click="cancel(category.id)">Cancel</md-button>
+
         </div>
 
 
     </form>
-    {{product|json}}
+    <pre>{{product|json}}</pre>
 </div>
+
+

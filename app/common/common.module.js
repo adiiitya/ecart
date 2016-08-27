@@ -120,14 +120,14 @@ angular.module('ecart.common',[])
                 }
 
             }
-
-            // bind change event
+// bind change event
             elem.on('change', onChange)
 
             // unbind event listener to prevent memory leaks
             scope.$on('$destroy', function () {
                 elem.off('change', onChange);
             })
+
 
         }
 
