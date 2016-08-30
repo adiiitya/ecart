@@ -25,13 +25,6 @@ angular.module('ecart.categories.product')
         $scope.values = [];
 
         var category;
-        /*   CommonFactory.category.get(categoryId)
-         .then(function (categoryData) {
-         category = categoryData.data;
-         $scope.category = category;
-
-         return CommonFactory.category.products.all(categoryId)
-         })*/
         CommonFactory.category.products.all().then(function (allProduct) {
             $scope.products = allProduct.data;
             _.each($scope.products, function (product) {
@@ -39,13 +32,6 @@ angular.module('ecart.categories.product')
                     image.url = Api.image + image.url;
                 });
             });
-            /* _.each($scope.products, function (product) {
-             if (product.id == productId) {
-             $scope.product = product;
-             console.log($scope.product);
-             }
-             });*/
-
             $scope.category = category;
             $scope.isLoading = false;
 
@@ -61,16 +47,14 @@ angular.module('ecart.categories.product')
         $scope.selectedTextChanged = function (searchText) {
             $scope.productFilter.name = searchText;
         };
-        //$scope.products = allProduct.data;
 
 
         $scope.editProduct = function (id) {
             $state.go('ecart.product.edit', {id: id});
         };
-
-        /*  $scope.displayProduct=function(pId){
-         $state.go('ecart.categories.product.display',{productId:pId});
-         };*/
+        $scope.displayProduct=function(id){
+            $state.go('ecart.product.view', {viewId: id});
+        };
 
         $scope.newProduct = function (categoryId) {
             $state.go('ecart.product.new', {categoryId: categoryId});
@@ -97,13 +81,17 @@ angular.module('ecart.categories.product')
     })
 
     .controller('createProductController', function ($scope, $http, toaster, $state, $stateParams, Api, CommonFactory, Upload, $mdDialog, $compile, $timeout) {
-
-        //var categoryId=$stateParams.categoryId;
-        //var productId=$stateParams.id;
         $scope.row = {
             selected: undefined
         };
+        var productId="";
         $scope.mode = $stateParams.mode;
+        if($scope.mode=='edit'){
+            productId=$stateParams.id;
+        }
+        if($scope.mode=='view'){
+            productId=$stateParams.viewId;
+        }
         $scope.uploadedImages = [];
         $scope.required = true;
         var menId, womenId, kidsId, othersId;
@@ -134,31 +122,36 @@ angular.module('ecart.categories.product')
             }],
             categoryTypes: [],
             stockData: [],
-            productIdealFor: []
+            //productIdealFor: [],
+            gender:"",
+            selectedGender:""
         };
 
-
-        /*  CommonFactory.category.get($stateParams.categoryId)
-         .then(function (categoryData) {
-         $scope.category = categoryData.data;
-         $scope.product.categoryTypes=$scope.category.types;
-         });*/
-        /* _.each($scope.product.selectedTypes, function (selectedtype) {
-         selectedtype.id=$scope.type;
-         })*/
-
-        $http.get(Api.ecart + '/category/types').then(function (types) {
+        CommonFactory.category.products.getTypes().then(function (types) {
             $scope.product.categoryTypes = types.data;
             console.log($scope.product.categoryTypes);
         });
+        CommonFactory.category.products.getGender().then(function (gender) {
+            $scope.product.gender = gender.data;
+            console.log($scope.product.gender);
+        });
+
+        $scope.changeInLowerBrand=function(){
+          $scope.product.brand=$scope.product.brand.toLowerCase();
+        };
 
 
-        if ($scope.mode == 'edit') {
-            $http.get(Api.ecart + '/category/types').then(function (types) {
+
+        if ($scope.mode == 'edit'||'view') {
+            CommonFactory.category.products.getTypes().then(function (types) {
                 $scope.product.categoryTypes = types.data;
                 console.log($scope.product.categoryTypes);
             });
-            CommonFactory.category.products.get($stateParams.id)
+           CommonFactory.category.products.getGender().then(function (gender) {
+                $scope.product.gender = gender.data;
+                console.log($scope.product.gender);
+            });
+            CommonFactory.category.products.get(productId)
                 .then(function (productData) {
                     $scope.product = productData.data;
 
@@ -187,13 +180,12 @@ angular.module('ecart.categories.product')
                             imgg = image;
                             if (image.defaultImage === true) {
                                 stock.defaultImageIndex = index;
-                                //stockId = stock.stockId;
                             }
                         })
                     })
 
 
-                    _.each($scope.product.productIdealFor, function (ideal) {
+                  /*  _.each($scope.product.productIdealFor, function (ideal) {
                         if (ideal.value == "men") {
                             $scope.men = true;
                             menId = $scope.product.productIdealFor.indexOf(ideal);
@@ -211,7 +203,7 @@ angular.module('ecart.categories.product')
                             $scope.others = true;
                             othersId = $scope.product.productIdealFor.indexOf(ideal);
                         }
-                    });
+                    });*/
 
                     console.log($scope.product.images);
                     console.log($scope.product);
@@ -282,17 +274,7 @@ angular.module('ecart.categories.product')
                 $scope.uploadedImages = images;
                 $scope.product.images = {};
             }
-            //return imgg;
         };
-
-      /*  $scope.$watch('image.selected', function () {
-            var radioButtons = angular.element("#radioButtons");
-            console.log(radioButtons);
-            _.each(radioButtons, function (radioButton) {
-                $compile(radioButton);
-
-            });
-        });*/
 
         $scope.changeImage = function (stockIndex) {
             var matchedStock = $scope.product.stockData[stockIndex];
@@ -322,7 +304,8 @@ angular.module('ecart.categories.product')
                 'stockData': $scope.product.stockData,
                 'productCategoryType': $scope.product.productCategoryType,
                 'productIdealFor': $scope.product.productIdealFor,
-                'brand': $scope.product.brand
+                'brand': $scope.product.brand,
+                selectedGender:$scope.product.selectedGender
             }
 
             if ($scope.uploadedImages.length <= 0) {
@@ -331,21 +314,10 @@ angular.module('ecart.categories.product')
                     return _.omit(stock, 'images');
                 });
             }
-
-
-            /* _.each(data.stockData, function (stock) {
-             stock.defaultStock = stock.defaultStock === 'true';
-             });*/
-
             if ($scope.mode == 'edit') {
                 //     methodType = 'PUT';
                 if (imgg !== 0) {
                     CommonFactory.category.products.update($stateParams.categoryId, $stateParams.id, data).then(function (response) {
-                        /*  _.each($scope.product.stocckData, function (stock) {
-                         if(stock.images==null){
-                         toaster.pop('error', "", "Select atleast one image file");
-                         }
-                         })*/
                         toaster.pop('success', "", 'Product Updated Successfully');
                         $state.go('ecart.product.list', {categoryId: $stateParams.categoryId});
 
@@ -358,11 +330,6 @@ angular.module('ecart.categories.product')
                     toaster.pop('error', "", "Select atleast one image file in each row");
                 } else {
                     CommonFactory.category.products.update($stateParams.categoryId, $stateParams.id, data).then(function (response) {
-                        /*  _.each($scope.product.stocckData, function (stock) {
-                         if(stock.images==null){
-                         toaster.pop('error', "", "Select atleast one image file");
-                         }
-                         })*/
                         toaster.pop('success', "", 'Product Updated Successfully');
                         $state.go('ecart.product.list', {categoryId: $stateParams.categoryId});
 
@@ -487,13 +454,13 @@ angular.module('ecart.categories.product')
         $scope.removeChoice = function (ev, id) {
 
             if ($scope.product.description.length > 1) {
-                openDialog(ev).then(function () {
+                CommonFactory.dialogBox.openDialog(ev).then(function () {
                     $scope.product.description.splice(id, 1);
                 }, function () {
                     console.log('not delete');
                 });
             } else {
-                openErrorDialog(ev).then(function () {
+                CommonFactory.dialogBox.openErrorDialog(ev).then(function () {
 
                 })
             }
@@ -502,7 +469,7 @@ angular.module('ecart.categories.product')
 
         $scope.removeColor = function (ev, stockid, id) {
             if ($scope.product.stockData.length > 1) {
-                openDialog(ev).then(function () {
+                CommonFactory.dialogBox.openDialog(ev).then(function () {
                     $http.get(Api.ecart + '/stock/' + stockid);
                     $scope.product.stockData.splice(id, 1);
                 }, function () {
@@ -511,7 +478,7 @@ angular.module('ecart.categories.product')
 
             } else {
 
-                openErrorDialog(ev).then(function () {
+                CommonFactory.dialogBox.openErrorDialog(ev).then(function () {
                 });
             }
         };
@@ -657,7 +624,9 @@ angular.module('ecart.categories.product')
             }
             $scope.product.stockData.push(stock);
         };
-        $scope.changeMen = function () {
+
+
+        /*$scope.changeMen = function () {
             var index = $scope.product.productIdealFor.indexOf('men');
             if ($scope.men) {
                 $scope.product.productIdealFor.push('men')
@@ -692,14 +661,7 @@ angular.module('ecart.categories.product')
                 $scope.product.productIdealFor.splice(othersId, 1);
             }
         };
-
-        /* $scope.edit = function (id) {
-         $state.go('ecart.categories.product.edit', {id: id});
-         };*/
-
-        /*  $scope.subCategory= function (index) {
-         $scope.product.selectedSubcategory=$scope.product.subCategory;
-         }*/
+*/
 
     });
 

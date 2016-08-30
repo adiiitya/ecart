@@ -1,5 +1,6 @@
 <div>
     <h3 ng-show="complete">{{category.name}}</h3>
+
     <div layout="row" layout-sm="column" layout-align="space-around">
         <md-progress-circular md-mode="indeterminate" ng-show="isLoading"></md-progress-circular>
     </div>
@@ -10,45 +11,39 @@
                 <div class="form-row" layout="row-sm-12">
                     <label class="col-sm-3">Name</label>
                     <md-input-container class="col-sm-5">
-                        <input  ng-model="category.name" ng-required="true">
+                        <input ng-model="category.name" ng-required="true">
                     </md-input-container>
                 </div>
 
                 <div class="form-row" layout="row-sm-12">
                     <label class="col-sm-3">Offer</label>
                     <md-input-container class="col-sm-5">
-                        <input  ng-model="category.offer">
+                        <input ng-model="category.offer">
                     </md-input-container>
                 </div>
-                <div class="form-row" layout="row-sm-12" >
+                <div class="form-row" layout="row-sm-12">
                     <md-button multiple="true" ngf-select="uploadImage($files)" ng-required="true"
-                            class="md-raised md-primary">select Image
+                               class="md-raised md-primary">select Image
                     </md-button>
                 </div>
                 <div class="row-sm-12 " id="image-container">
                     <div class=" row col-sm-3" id="stock-image-wrapper"
                          ng-repeat="(imageIndex,image) in category.images">
-
-
-                        <!-- <div class="row col-sm-3"
-                              ng-repeat="(imageIndex,image) in stock.images" class="row-sm-4">-->
                         <image class="product_image"
                                ng-src="{{image.url}}"
                                title="{{image.title}}"></image>
                         <input type="radio" name="imageRow-{{imageIndex}}"
                                ng-model="category.defaultImageIndex"
                                value="{{imageIndex}}" ng-change="changeImage(imageIndex)">
-                        <!--
-                                                                </div>
-                        -->
                     </div>
                 </div>
                 <div class="form-row">
-                    <md-button class="md-raised md-primary" ng-disabled="myform.$invalid " ng-click="submit()">Submit</md-button>
+                    <md-button class="md-raised md-primary" ng-disabled="myform.$invalid " ng-click="submit()">Submit
+                    </md-button>
                     <md-button class="md-raised md-primary" ng-click="cancel()">Cancel</md-button>
 
                 </div>
-                </div>
+            </div>
             <div class="container-box col-md-8" layout="column" layout-sm="row">
                 <div class="col-sm-12">
                     <label>Category_Type</label>
@@ -65,9 +60,6 @@
                                  src="images/delete.png">
                         </th>
                         <th class="col-sm-4">Type</th>
-<!--
-                        <th class="col-sm-4">Value</th>
--->
                         </thead>
                         <tbody>
                         <tr ng-repeat="type in category.types">
@@ -82,64 +74,14 @@
                                            ng-model="category.types[$index].type" ng-required="true">
                                 </md-input-container>
                             </td>
-                            <!--<td class="col-sm-4">
-                                <md-input-container>
-                                    <input type="text" aria-label="value" id="{{'types_' + $index + '_value'}}"
-                                           ng-model="category.types[$index].value" ng-required="required">
-                                </md-input-container>
-                            </td>-->
                         </tr>
                         </tbody>
                     </table>
                 </div>
-</div>
+            </div>
 
 
-</div>
-           <!-- <div class="col-sm-12 container-box">
-
-&lt;!&ndash;
-                <div class="form-row">
-                    <div class="row">
-                        <div class="col-sm-10">
-                            <div class="row-sm-12">
-                                <button multiple="true" ngf-select="uploadImage($files)"
-                                        class="btn btn-success btn-sm">select Image
-                                </button>
-&lt;!&ndash;
-                                <image ng-show="category.mainCategoryImage" class="product_image" src="{{category.mainCategoryImage}}"></image>
-&ndash;&gt;
-                                <div class="row-sm-12 " id="image-container">
-                                    <div class=" row col-sm-3" id="stock-image-wrapper"
-                                         ng-repeat="(imageIndex,image) in category.images">
-
-
-                                        &lt;!&ndash; <div class="row col-sm-3"
-                                              ng-repeat="(imageIndex,image) in stock.images" class="row-sm-4">&ndash;&gt;
-                                        <image class="product_image"
-                                               ng-src="{{image.url}}"
-                                               title="{{image.title}}"></image>
-                                        <input type="radio" name="imageRow-{{imageIndex}}"
-                                               ng-model="category.defaultImageIndex"
-                                               value="{{imageIndex}}" ng-change="changeImage(imageIndex)">
-                                        &lt;!&ndash;
-                                                                                </div>
-                                        &ndash;&gt;
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-&ndash;&gt;
-
-            </div>-->
-
-
-
-
-        <pre>{{category|json}}</pre>
+        </div>
     </form>
 </div>
 

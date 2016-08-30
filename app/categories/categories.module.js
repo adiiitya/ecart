@@ -46,6 +46,18 @@ angular.module('ecart.categories', ['ecart.categories.product'])
                     }
                 }
             })
+            .state('ecart.categories.view', {
+                url: '/view/:viewId',
+                params:{
+                    mode:'view'
+                },
+                views : {
+                    "@": {
+                        templateUrl:'categories/viewCategory.html',
+                        controller:'CreateCategoriesController'
+                    }
+                }
+            })
             .state('ecart.categories.all.list',{
                 url:'/arrival/list',
 

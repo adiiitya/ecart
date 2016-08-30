@@ -18,8 +18,30 @@ angular.module('ecart.categories')
             categories = angular.copy(categoriesData.data);
             var defer = $q.defer();
             var promises = [];
+            /*_.each(categories, function (category) {
+             promises.push(CommonFactory.category.products.all(category.id).then(function (productPromise) {
+             return productPromise.data;
+             }));
+             });
+             return $q.all(promises);
+             })
+             .then(function (productsData) {
+             var allProducts = [];
+             _.each(productsData, function (products) {
+             _.each(products, function (product) {
+             allProducts.push(product);
+
+             });
+             });
+
+
+             _.each(categories, function (category) {
+             category.products = _.where(allProducts, {categoryId: (category.id).toString()});
+             });*/
             $scope.categories = categories;
             $scope.isLoading = false;
+            //console.log(categories);
+
         });
 
         $scope.queryGroups = function (search) {
@@ -65,16 +87,21 @@ angular.module('ecart.categories')
         $scope.mode = $stateParams.mode;
         $scope.uploadedImages = [];
         $scope.cancelDiv = false;
+        var cookieValue;
         var imgg = [];
+        // var category;
         var categories;
+        var list = [];
         $scope.category = {
+
             name: "",
             offer: "",
             images: [],
 
             types: [{
                 id: "types_",
-                type: ""
+                type: ""/*,
+                 value: ""*/
             }],
             defaultImageIndex: false
 
@@ -95,7 +122,6 @@ angular.module('ecart.categories')
 
             });
         }
-        ;
 
         $scope.showTitle = function () {
             $scope.complete = true;
@@ -106,7 +132,7 @@ angular.module('ecart.categories')
             if (images && images.length != 0) {
                 $scope.category.images = [];
                 angular.forEach(images, function (data, index) {
-                    var $reader = new FileReader(), result;
+                    var $reader = new FileReader(), result, $imageElement;
 
                     // set resulting image
                     $reader.onload = function (e) {
@@ -147,23 +173,30 @@ angular.module('ecart.categories')
         $scope.submit = function () {
             $http.get(Api.ecart + '/debug');
             $scope.isLoading = true;
+            var images;
             if ($scope.uploadedImages.length > 0) {
+                images = imgg;
                 data = {
+                    //'mainCategory_id':$scope.category.selected,
                     'name': $scope.category.name,
                     'offer': $scope.category.offer,
                     'images': $scope.category.images,
                     'types': $scope.category.types
+                    //'mainCategoryImage':$scope.category.mainCategoryImage
                 };
 
             }
             else {
                 data = {
+                    //'mainCategory_id':$scope.category.selected,
                     'name': $scope.category.name,
                     'offer': $scope.category.offer,
                     'types': $scope.category.types
                 };
 
             }
+            //var images = _.union($scope.category.images,$scope.uploadedImages);
+
             if ($scope.mode == 'create') {
                 if ($scope.uploadedImages.length == 0) {
                     toaster.pop('error', "", "Select atleast one image file")
@@ -210,7 +243,8 @@ angular.module('ecart.categories')
             var length = $scope.category.types ? $scope.category.types.length + 1 : 0;
             $scope.category.types.push({
                 id: "types_" + length,
-                type: ""
+                type: ""/*,
+                 value: ""*/
             });
         };
         $scope.removeType = function (ev, id) {

@@ -19,12 +19,15 @@ angular.module('ecart.categories.product', [])
                     }
                 }
             })
-            .state('ecart.categories.product.view', {
-                url: '/view/:id',
+            .state('ecart.product.view', {
+                url: '/view/:viewId',
+                params: {
+                    mode: 'view'
+                },
                 views: {
                     "@": {
-                        templateUrl: "categories/products/viewProduct.html",
-                        controller: 'ProductController'
+                        templateUrl: "categories/products/displayProduct.html",
+                        controller: 'createProductController'
 
                     }
                 }

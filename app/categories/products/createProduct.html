@@ -1,4 +1,7 @@
 <div>
+<!--
+    <h2>{{category.name}}</h2>
+-->
 
     <form name="myform" class="form-validation">
         <div layout="row-md-12">
@@ -6,31 +9,40 @@
                 <div class="form-row" layout="row-sm-12">
                     <label class="col-sm-3">Name</label>
                     <md-input-container class="col-sm-8">
-                        <input  ng-model="product.name">
+                        <input aria-label="name"  ng-model="product.name">
                     </md-input-container>
+                    <!-- <md-input-container class="md-block" >
+                         <label>Name</label><input aria-label="name" ng-model="product.name">
+                     </md-input-container>-->
                 </div>
                 <div class="form-row" layout="row-sm-12">
                     <label class="col-sm-3">Price</label>
                     <md-input-container class="col-sm-8">
-                        <input  ng-model="product.price">
+                        <input aria-label="price" ng-model="product.price">
                     </md-input-container>
+                    <!-- <md-input-container class="md-block" >
+                         <label>Price</label><input aria-label="price" ng-model="product.price">
+                     </md-input-container>-->
                 </div>
                 <div class="form-row" layout="row-sm-12">
                     <label class="col-sm-3">Offer</label>
                     <md-input-container class="col-sm-8">
-                        <input  ng-model="product.offer">
+                        <input aria-label="offer" ng-model="product.offer">
                     </md-input-container>
+                    <!-- <md-input-container class="md-block" >
+                         <label>Offer</label><input aria-label="offer" ng-model="product.offer">
+                     </md-input-container>-->
                 </div>
                 <div class="form-row" layout="row-sm-12">
                     <label class="col-sm-3">Brand</label>
-                    <md-input-container class="col-sm-8">
-                        <input  ng-model="product.brand">
+                    <md-input-container  class="col-sm-8">
+                        <input aria-label="brand" ng-blur="changeInLowerBrand()" ng-model="product.brand">
                     </md-input-container>
                 </div>
                     <div class="form-row" layout="row-sm-12">
-                        <md-input-container>
-                            <label class="col-sm-5">Types</label>
-                            <md-select class="col-sm-5" ng-model="product.productCategoryType"
+                        <label class="col-sm-3">Types</label>
+                        <md-input-container class="col-sm-8">
+                            <md-select aria-label="categorytype" ng-model="product.productCategoryType"
                                        md-on-close="clearSearchTerm()"
                                        data-md-container-class="selectdemoSelectHeader"
                                        multiple>
@@ -62,6 +74,7 @@
                         <md-checkbox
                                 ng-model="stock"
                                 aria-label="Checkbox 1"
+                                ng-disabled="colorStock||sizeStock"
                                 ng-change="showStock()"
                                 class="md-primary md-align-top-left">
                             Stock
@@ -81,6 +94,7 @@
                     <div layout="row">
                         <md-checkbox
                                 ng-model="colorStock"
+                                ng-disabled="stock"
                                 aria-label="Checkbox 2"
                                 ng-change="showColorStock()"
                                 class="md-primary md-align-top-left">
@@ -88,6 +102,7 @@
                         </md-checkbox>
                         <md-checkbox
                                 ng-model="sizeStock"
+                                ng-disabled="stock"
                                 aria-label="Checkbox 3"
                                 ng-change="showSizeStock()"
                                 class="md-primary md-align-top-left">
@@ -96,36 +111,63 @@
 
                     </div>
                 </div>
-                <div class="form-row">
-                    <label>Ideal For</label>
-                    <md-checkbox
+               <!-- <div class="form-row">
+                    <label class="col-sm-3">Ideal For</label>
+                    <md-checkbox class="col-sm-1"
                             ng-model="men"
                             aria-label="Checkbox 2"
                             ng-change="changeMen()"
                             class="md-primary md-align-top-left">
                         Men
                     </md-checkbox>
-                    <md-checkbox
+                    <md-checkbox class="col-sm-2"
                             ng-model="women"
                             aria-label="Checkbox 3"
                             ng-change="changeWomen()"
                             class="md-primary md-align-top-left">
                         Women
                     </md-checkbox>
-                    <md-checkbox
+                    <md-checkbox class="col-sm-1"
                             ng-model="kids"
                             aria-label="Checkbox 3"
                             ng-change="changeKids()"
                             class="md-primary md-align-top-left">
                         Kids
                     </md-checkbox>
-                    <md-checkbox
+                    <md-checkbox class="col-sm-1"
                             ng-model="other"
                             aria-label="Checkbox 3"
                             ng-change="changeOther()"
                             class="md-primary md-align-top-left">
                         Other
                     </md-checkbox>
+                </div>-->
+                <div class="form-row" layout="row-sm-12">
+                    <label class="col-sm-3">Gender</label>
+                    <md-input-container class="col-sm-8">
+                        <md-select aria-label="gender" ng-model="product.selectedGender"
+                                   md-on-close="clearSearchTerm()"
+                                   data-md-container-class="selectdemoSelectHeader"
+                                   multiple>
+                            <md-autocomplete style="width: auto"
+                                             md-search-text="searchText"
+                                             md-items="item in categoryTypes(searchText)"
+                                             md-item-text="item.name"
+                                             md-selected-item="item.name"
+                                             md-search-text-change="selectedTextChanged(searchText)"
+                                             md-autoselect="true"
+                                             md-select-on-match="true"
+                                             md-no-cache="true"
+                                             md-require-match="true"
+                                             placeholder="Find a gender..">
+                                <span md-highlight-text="searchText">{{item.name}}</span>
+                            </md-autocomplete>
+                            <md-optgroup label="types">
+                                <md-option ng-value="item.id" ng-repeat="item in product.gender |
+              filter:productFilter">{{item.value}}</md-option>
+                            </md-optgroup>
+                        </md-select>
+                    </md-input-container>
                 </div>
             </div>
 
@@ -373,6 +415,10 @@
         </div>
 
 
+        <!--  <div layout="row-md-12">
+
+          </div>-->
+
         <div class="row-col-sm-6">
             <md-button class="md-raised md-primary" ng-click="submit()">Submit</md-button>
             <md-button class="md-raised md-primary" ng-click="cancel(category.id)">Cancel</md-button>
@@ -380,6 +426,15 @@
         </div>
 
     </form>
+    <pre>{{product|json}}</pre>
+    <!--<pre>-->
+    <!--{{image.selected | json}}-->
+    <!--</pre>-->
+    <!--
+        {{myform.$error|json}}
+    -->
+    <!--{{data}}-->
+
 </div>
 
 

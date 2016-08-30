@@ -1,6 +1,4 @@
-<!--
-<h3>{{category.name}}</h3>
--->
+
 <md-button class="md-raised md-primary" ng-click="newProduct(category.id)">Create Product</md-button>
 <div>
 
@@ -35,7 +33,7 @@
     </thead>
     <tbody>
     <tr ng-repeat="product in products |filter: productFilter |orderBy:'-price' ">
-        <td >{{product.name}}</td>
+        <td ng-click="displayProduct(product.id)" >{{product.name}}</td>
         <td>{{product.offer}}</td>
         <td>{{product.price}}</td>
         <td>

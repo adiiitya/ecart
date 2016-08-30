@@ -7,69 +7,55 @@
 
                 <div class="form-row" layout="row-sm-12">
                     <label class="col-sm-3 ">Heading</label>
-                    <md-input-container  class="col-sm-5 ">
-                        <input ng-model="home.heading" >
+                    <md-input-container class="col-sm-5 ">
+                        <input aria-label="heading" ng-model="home.heading">
                     </md-input-container>
                 </div>
 
                 <div class="form-row" layout="row-sm-12">
                     <label class="col-sm-3">Title</label>
                     <md-input-container class="col-sm-5 ">
-                        <input  ng-model="home.title">
+                        <input aria-label="title" ng-model="home.title">
                     </md-input-container>
                 </div>
 
-                <div class="form-row" layout="row-sm-12" >
-                   <label class="col-sm-3">Select a type to Tag</label>
+                <div class="form-row" layout="row-sm-12">
+                    <label class="col-sm-3">Select a type to Tag</label>
+
                     <div class="col-sm-8">
                         <input type="radio" name="selectedName"
-                               ng-model="home.selectedName"
+                               ng-model="home.selectedName" aria-label="selected"
                                value="categoryName" ng-change="showItems(home.selectedName)"><label>Category</label>
-                        <input type="radio" name="selectedName"
+                        <!--<input type="radio" name="selectedName"
                                ng-model="home.selectedName"
                                value="categoryType" ng-change="showItems(home.selectedName)"><label>CategoryType</label>
                         <input type="radio" name="selectedName"
                                ng-model="home.selectedName"
                                value="productName" ng-change="showItems(home.selectedName)"><label>Product</label>
-                        <input type="radio" name="selectedName"
+                        --><input type="radio" name="selectedName"
                                ng-model="home.selectedName"
                                value="brand" ng-change="showItems(home.selectedName)"><label>Brand</label>
-                        <input type="radio" name="selectedName"
+                       <!-- <input type="radio" name="selectedName"
                                ng-model="home.selectedName"
                                value="gender" ng-change="showItems(home.selectedName)"><label>Gender</label>
-                    </div>
+                   --> </div>
                 </div>
 
 
                 <div class="form-row" layout="row-sm-12">
                     <label class="col-sm-3">Tag</label>
-                   <!-- <md-input-container class="col-sm-3">
-                        <label>{{home.selectedName}}</label>
-                        <md-select ng-model="home.tag"ng-show="home.selectedName" ng-click="showItems(home.selectedName)"
-                                   md-on-close="clearSearchTerm()"
-                                   data-md-container-class="selectdemoSelectHeader"
-                                   multiple>
-                            <md-select-header class="demo-select-header">
-                                <input ng-model="searchTerm"
-                                       type="search"
-                                       placeholder="Search for a category.."
-                                       class="demo-header-searchbox md-text">
-                            </md-select-header>
-                            <md-optgroup label="types">
-                                <md-option ng-value="item.id" ng-repeat="item in home.data |
-              filter:searchTerm">{{item.name}}</md-option>
-                            </md-optgroup>
-                        </md-select>
-                    </md-input-container>-->
-                    <md-select class="form-row col-sm-3"
-                            ng-model="home.tag" ng-show="home.selectedName">
-                            <md-option ng-repeat="item in home.data" ng-value="item.name">{{item.name}}</md-option>
+                    <md-select aria-label="tag" class="form-row col-sm-3"
+                               ng-model="home.tag" ng-show="home.selectedName" ng-blur="selectCategoryType()">
+                        <md-option ng-repeat="item in home.data" ng-value="item.id">{{item.name}}</md-option>
                     </md-select>
-<!--
 
+                </div>
+
+
+                <div ng-show="home.selectedName=='categoryName'" class="form-row" layout="row-sm-12">
+                    <label class="col-sm-3">CategoryTypes</label>
                     <md-input-container class="col-sm-3">
-                        <label>Types</label>
-                        <md-select ng-model="home.selectedCategoryTypes"
+                        <md-select aria-label="categorytype" ng-model="home.selectedCategoryType"
                                    md-on-close="clearSearchTerm()"
                                    data-md-container-class="selectdemoSelectHeader"
                                    multiple>
@@ -80,78 +66,40 @@
                                        class="demo-header-searchbox md-text">
                             </md-select-header>
                             <md-optgroup label="types">
-                                <md-option ng-value="item.id" ng-repeat="item in home.categoryTypes |
+                                <md-option  ng-value="item.id" ng-repeat="item in home.categoryType |
               filter:searchTerm">{{item.name}}</md-option>
                             </md-optgroup>
                         </md-select>
                     </md-input-container>
-
-                    <md-input-container class="col-sm-3">
-                        <label>Product</label>
-                        <md-select ng-model="home.selectedProduct"
-                                   md-on-close="clearSearchTerm()"
-                                   data-md-container-class="selectdemoSelectHeader"
-                                   multiple>
-                            <md-select-header class="demo-select-header">
-                                <input ng-model="searchTerm"
-                                       type="search"
-                                       placeholder="Search for a Product.."
-                                       class="demo-header-searchbox md-text">
-                            </md-select-header>
-                            <md-optgroup label="types">
-                                <md-option ng-value="item.id" ng-repeat="item in home.products |
-              filter:searchTerm">{{item.name}}</md-option>
-                            </md-optgroup>
-                        </md-select>
-                    </md-input-container>
-
-                    <md-input-container class="col-sm-3">
-                        <label>Gender</label>
-                        <md-select ng-model="home.selectedGender"
-                                   md-on-close="clearSearchTerm()"
-                                   data-md-container-class="selectdemoSelectHeader"
-                                   multiple>
-                            <md-select-header class="demo-select-header">
-                                <input ng-model="searchTerm"
-                                       type="search"
-                                       placeholder="Search for a Gender.."
-                                       class="demo-header-searchbox md-text">
-                            </md-select-header>
-                            <md-optgroup label="types">
-                                <md-option ng-value="item.id" ng-repeat="item in home.gender |
-              filter:searchTerm">{{item.name}}</md-option>
-                            </md-optgroup>
-                        </md-select>
-                    </md-input-container>
-
-                    <md-input-container class="col-sm-3">
-                        <label>Brand</label>
-                        <md-select ng-model="home.selectedBrand"
-                                   md-on-close="clearSearchTerm()"
-                                   data-md-container-class="selectdemoSelectHeader"
-                                   multiple>
-                            <md-select-header class="demo-select-header">
-                                <input ng-model="searchTerm"
-                                       type="search"
-                                       placeholder="Search for a Brand.."
-                                       class="demo-header-searchbox md-text">
-                            </md-select-header>
-                            <md-optgroup label="types">
-                                <md-option ng-value="item.id" ng-repeat="item in home.brands |
-              filter:searchTerm">{{item.name}}</md-option>
-                            </md-optgroup>
-                        </md-select>
-                    </md-input-container>
-
--->
-
-
 
                 </div>
+                <div ng-show="home.selectedCategoryType||home.selectedName=='brand'" class="form-row" layout="row-sm-12">
+                        <label class="col-sm-3">Products</label>
+                        <md-input-container class="col-sm-3">
+                            <md-progress-circular md-mode="indeterminate" ng-show="isLoading"></md-progress-circular>
+                            <md-select aria-label="products" ng-click="changeType()" ng-model="home.selectedProducts"
+                                       md-on-close="clearSearchTerm()"
+                                       data-md-container-class="selectdemoSelectHeader"
+                                       multiple>
+                                <md-select-header class="demo-select-header">
+                                    <input ng-model="searchTerm"
+                                           type="search"
+                                           placeholder="Search for a type.."
+                                           class="demo-header-searchbox md-text">
+                                </md-select-header>
+                                <md-optgroup label="types">
+                                    <md-option ng-value="item.id" ng-repeat="item in home.products |
+              filter:searchTerm">{{item.name}}</md-option>
+                                </md-optgroup>
+                            </md-select>
+                        </md-input-container>
+
+                </div>
+
                 <div class="form-row" layout="row-sm-12">
                     <label class="col-sm-3">Offer</label>
                     <md-input-container class="col-sm-5">
-                        <input ng-model="home.offer">
+                        <input aria-label="offer" ng-model="home.offer">
                     </md-input-container>
 
                 </div>
@@ -161,24 +109,16 @@
                         <div class="col-sm-10">
                             <div class="row-sm-12">
                                 <md-button multiple="true" ngf-select="uploadImage($files)"
-                                        class="md-raised md-primary">select Image
+                                           class="md-raised md-primary">select Image
                                 </md-button>
                                 <div class="row-sm-12 " id="image-container">
                                     <div class=" row col-sm-3" id="stock-image-wrapper"
                                          ng-repeat="(imageIndex,image) in home.images">
 
 
-                                        <!-- <div class="row col-sm-3"
-                                              ng-repeat="(imageIndex,image) in stock.images" class="row-sm-4">-->
                                         <image class="product_image"
                                                ng-src="{{image.url}}"
                                                title="{{image.title}}"></image>
-                                       <!-- <input type="radio" name="imageRow-{{imageIndex}}"
-                                               ng-model="newArrival.defaultImageIndex"
-                                               value="{{imageIndex}}" ng-change="changeImage(imageIndex)">-->
-                                        <!--
-                                                                                </div>
-                                        -->
                                     </div>
                                 </div>
                             </div>
@@ -195,10 +135,10 @@
 
 
         </div>
-
-
-        <pre>{{home|json}}</pre>
     </form>
+    <pre>
+        {{home|json}}
+    </pre>
 </div>
 
 

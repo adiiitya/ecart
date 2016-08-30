@@ -2,14 +2,19 @@
  * Created by okagour on 23-08-2016.
  */
 angular.module('ecart.categories')
-    .controller('createOrder', function ($scope,$stateParams, toaster,$state, CommonFactory, Api, $http,$timeout, $mdDialog, $q) {
+    .controller('createOrder', function ($scope,$stateParams,$element, toaster,$state, CommonFactory, Api, $http,$timeout, $mdDialog, $q) {
         var orderId=$stateParams.oId;
-        var homeData;
-        var products = [];
-        var subCategories = [];
         var data = {};
-        var orders;
         var uploadedImages=[];
+        var categoryTypes=[];
+        var products=[];
+        $scope.searchTerm;
+        $scope.clearSearchTerm = function() {
+            $scope.searchTerm = '';
+        };
+        $element.find('input').on('keydown', function(ev) {
+            ev.stopPropagation();
+        });
         $scope.home = {
             heading:"",
             title: "",
@@ -19,105 +24,87 @@ angular.module('ecart.categories')
             images: [],
             defaultImageIndex: false,
             selectedName:"",
-            data:[]
+            data:[],
+            categoryType:"",
+            selectedCategoryType:"",
+            selectedProducts:"",
+            products:""
+            //gender:"",
+            //selectedGender:""
         };
 
-       /* $http.get(Api.ecart + '/newArrival/all/data').then(function (arrivalData) {
-            homeData = arrivalData.data;
-            console.log(homeData);
-            $scope.home.categories=homeData.categories;
-            $scope.home.categoryTypes = homeData.categoryTypes;
-            $scope.home.products = homeData.products;
-            $scope.home.gender=homeData.gender;
-            $scope.home.brands=homeData.brands;
-
-        })
-*/
         $http.get(Api.ecart + '/debug');
 
         $scope.showItems=function(itemName){
           CommonFactory.newArrival.getTypes(itemName).then(function (itemData) {
-               $scope.home.data=itemData.data;
-               console.log($scope.home.data);
+              if(itemName=='categoryName'){
+                  $scope.home.data=itemData.data.categoryName;
+                  categoryTypes=itemData.data.categoryType;
+              }else{
+                  $scope.home.data=itemData.data.productBrand;
+              }
+              /* $scope.home.data=itemData.categoryName;
+               console.log($scope.home.data);*/
+              //if(itemName=='brands'){
+              //    $scope.home.products=itemData.products;
+              //}else{
+              //    $scope.home.categoryType=itemData.categoryTypes;
+              //    $scope.home.products=itemData.products;
+              //}
            })
        };
 
-       /* $scope.changeIt=function(heading){
-            $scope.home.heading = heading.toLowerCase().replace(/ /g,"");
-
-        }
-*/
-
-
-
-
-      /*  if(orderId){
-            $http.get(Api.ecart + '/newArrival/'+orderId).then(function (arrivalData) {
-                orders = arrivalData.data;
-                console.log(orders);
-                $scope.newArrival.mainId=orders.mainCategory_id;
-                $scope.newArrival.subId=orders.subCategory_id;
-                var filteredSubCategories = [];
-                _.each(subCategories, function (subCategory) {
-                    if (subCategory.mainCategory_id === $scope.newArrival.mainId) {
-                        filteredSubCategories.push(subCategory);
+        $scope.selectCategoryType=function(){
+            $scope.home.selectedCategoryType=[];
+            if($scope.home.selectedName=='categoryName'){
+                var filteredTypes=[];
+                _.each(categoryTypes,function(type){
+                    if(type.category_id==$scope.home.tag){
+                        filteredTypes.push(type);
                     }
-                    $scope.newArrival.subCategories = angular.copy(filteredSubCategories);
                 });
-
-                if(orders.product_id){
-                    $scope.newArrival.productId=orders.product_id;
-                    var filteredProducts = [];
-                    _.each(products, function (product) {
-                        if (product.subCategory_id == $scope.newArrival.subId) {
-                            filteredProducts.push(product);
-                        }
-                        $scope.newArrival.products = angular.copy(filteredProducts);
-                    });
-                }
-                $scope.newArrival.name=orders.name;
-                $scope.newArrival.images=orders.images;
-                _.each($scope.newArrival.images, function (image) {
-                    image.url=Api.image+image.url;
-                });
-                $scope.newArrival.offer=orders.offer;
-                /!*_.each(categories, function (arrivalCategories) {
-                 $scope.newArrival.mainCategories = arrivalCategories;
-                 console.log($scope.newArrival.mainCategories);
-                 subCategories = arrivalCategories.subCategories;
-                 products = arrivalCategories.products;
-                 });*!/
-            })
-
-        }else{
+                $scope.home.categoryType=angular.copy(filteredTypes);
+            }
 
 
 
-
-
-        $scope.mainCategory = function (categoryId) {
-            //cId=$scope.newArrival.mainId;
-            var filteredSubCategories = [];
-            _.each(subCategories, function (subCategory) {
-                if (subCategory.mainCategory_id === categoryId) {
-                    filteredSubCategories.push(subCategory);
-                }
-                $scope.newArrival.subCategories = angular.copy(filteredSubCategories);
-            });
 
         };
+        $scope.changeType=function() {
+            if ($scope.home.selectedName == 'categoryName') {
 
-        $scope.subCategory = function (subCategoryId) {
-            var filteredProducts = [];
-            _.each(products, function (product) {
-                if (product.subCategory_id == subCategoryId) {
-                    filteredProducts.push(product);
+
+                var data = {
+                    selectedCategoryType: $scope.home.selectedCategoryType
+                };
+                $scope.isLoading = true;
+
+                /*$http.post(Api.ecart + '/homePage/categoryType/products', data, {headers: {role: 'admin'}})*/
+                CommonFactory.newArrival.postTypes('categoryType',data).then(function (response) {
+                    $scope.home.products = response.data;
+                    /* _.each(products,function(product){
+                     $scope.home.products.push(product);
+                     });*/
+                    $scope.isLoading = false;
+
+                });
+            }
+            if($scope.home.selectedName=='brand'){
+                var data={
+                    selectedBrandType:$scope.home.tag
                 }
-                $scope.newArrival.products = angular.copy(filteredProducts);
-            });
-        };
-        }*/
+                /*$http.post(Api.ecart+'/homePage/brands/products',data,{headers:{role:'admin'}})*/
+                    CommonFactory.newArrival.postTypes('brands',data).then(function(response){
+                    $scope.home.products=response.data;
+                    /* _.each(products,function(product){
+                     $scope.home.products.push(product);
+                     });*/
+                    $scope.isLoading=false;
 
+                });
+            }
+
+        };
         $scope.uploadImage = function (images) {
             if (images && images.length != 0) {
                 $scope.home.images = [];
@@ -133,10 +120,7 @@ angular.module('ecart.categories')
 
                         $timeout(function () {
                             $scope.home.images.push({
-                                'url': result/*,
-                                'imageName': $scope.newArrival.id + '-' + index,
-                                'defaultImage': index === 0*/
-
+                                'url': result
                             });
                         })
 
@@ -165,7 +149,8 @@ angular.module('ecart.categories')
                         title: $scope.home.title,
                         offer: $scope.home.offer,
                         tag:$scope.home.tag,
-                        selected:$scope.home.selectedName
+                        selected:$scope.home.selectedName,
+                        selectedProducts:$scope.home.selectedProducts
                     }
                 }else{
                     data = {
@@ -174,29 +159,11 @@ angular.module('ecart.categories')
                         offer: $scope.home.offer,
                         tag:$scope.home.tag,
                         images:$scope.home.images,
-                        selected:$scope.home.selectedName
+                        selected:$scope.home.selectedName,
+                        selectedProducts:$scope.home.selectedProducts
+
                     }
                 }
-
-
-
-
-
-            /*if(orderId){
-
-                CommonFactory.newArrival.update(orderId,data).then(function (response) {
-                    if(response.data=='newArrival created')
-                    {
-                        toaster.pop('success', "", response.data+'Successfully');
-                        $state.go('ecart.categories.all');
-
-                    }
-                    else{
-                        toaster.pop('error', "",'You are Logged Out, Login To Create Category');
-                        $state.go('login');
-                    }
-                })
-            }else{*/
                 if(uploadedImages.length ==0)
                 {
                     toaster.pop('error',"","Select atleast one image file")
@@ -210,18 +177,10 @@ angular.module('ecart.categories')
                     })
                 }
             }
-
-
-        //};
-
-
     })
 
     .controller('listOrder', function ($scope, toaster,$state, CommonFactory, Api, $http,$timeout, $mdDialog, $q) {
         var arrivals;
-        var products = [];
-        var subCategories = [];
-        var data = {};
         $scope.orders = {
            list:[]
         };

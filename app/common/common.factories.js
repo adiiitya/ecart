@@ -2,7 +2,7 @@
  * Created by okagour on 22-07-2016.
  */
 angular.module('ecart.common')
-    .factory('CommonFactory', function ($http, Api, $mdDialog) {
+    .factory('CommonFactory', function ($http, Api,$mdDialog) {
         return {
             category: {
 
@@ -29,6 +29,12 @@ angular.module('ecart.common')
                     get: function (id) {
                         return $http.get(Api.ecart + '/product/' + id);
                     },
+                    getTypes:function(){
+                      return $http.get(Api.ecart + '/category/types');
+                    },
+                    getGender:function(){
+                      return  $http.get(Api.ecart + '/product/gender');
+                    },
                     save: function (id, data) {
                         return $http.post(Api.ecart + '/product', data, {headers: {role: 'admin'}});
                     },
@@ -54,7 +60,10 @@ angular.module('ecart.common')
             },
             newArrival: {
                 getTypes: function (itemName) {
-                    return $http.get(Api.ecart + '/homePage/search/' + itemName);
+                  return  $http.get(Api.ecart+'/homePage/search/'+itemName);
+                },
+                postTypes:function(type,data){
+                  return $http.post(Api.ecart + '/homePage/'+type+'/products', data, {headers: {role: 'admin'}})
                 },
                 save: function (data) {
                     return $http.post(Api.ecart + '/homePage', data, {headers: {role: 'admin'}})
@@ -66,7 +75,7 @@ angular.module('ecart.common')
                     return $http.delete(Api.ecart + '/newArrival' + id, {headers: {role: 'admin'}});
                 }
             },
-            dialogBox: {
+            dialogBox:{
                 openDialog: function (ev) {
                     var config = {
                         title: 'Would you like to delete this item?',
